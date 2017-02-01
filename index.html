@@ -10,15 +10,20 @@
     margin:0;
     padding:0;
 }
-html{
-    background-color:#fff;
+html,body{
+    min-height:100%;
+    overflow-x:hidden;    
+    overflow-y:auto;
+}
+body{
+    background-color:#BEE4F9;
     font:normal 16px/1.5 sans-serif;
     color:#333;
 }
 h3{
     font:normal 32px/1.5 'Open Sans',sans-serif;
     color:#2c3e50;
-    margin:50px 0;
+    margin:40px 0;
     text-align:center;
 }
 .container{
@@ -120,6 +125,7 @@ h3{
   .app .controls #take-photo i{font-size:18px;}
 }  
 </style>
+<script src="https://use.fontawesome.com/efb7ebeaf0.js"></script>
 </head>
 <body>
   
@@ -131,9 +137,9 @@ h3{
     <img id="snap">
     <p id="error-message"></p>
     <div class="controls">
-      <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a>
-      <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a>
-      <a href="#" id="download-photo" download="selfie.png" title="Save Photo" class="disabled"><i class="material-icons">file_download</i></a>  
+      <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="fa fa-remove"></i></a>
+      <a href="#" id="take-photo" title="Take Photo"><i class="fa fa-camera"></i></a>
+      <a href="#" id="download-photo" download="selfie.png" title="Save Photo" class="disabled"><i class="fa fa-download"></i></a>  
     </div>
     <!-- Hidden canvas element. Used for taking snapshot of video. -->
     <canvas></canvas>
