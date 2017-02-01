@@ -16,12 +16,12 @@ body{
 h3{
     font:normal 32px/1.5 'Open Sans',sans-serif;
     color:#2c3e50;
-    margin:40px 0;
+    margin:35px 0;
     text-align:center;
 }
 .container{
     max-width:1000px;
-    margin:50px auto;
+    margin:35px auto;
     padding:9px;
     background-color:#efefef;
 }
