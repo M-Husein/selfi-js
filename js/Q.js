@@ -24,7 +24,7 @@ console.log("%cThis is Just Tools For Developer","color:red;font-size:18px;");
 		$(this).tooltip('hide');
 	});
 	
-  $(".stopPro").click(function(e){
+  $(document).on("click",".stopPro",function(e){
     e.stopPropagation();
   });
 	
