@@ -1,11 +1,23 @@
 $(function(){
 /* JUST INFO IN console js */
 console.log("%cHello Guys...!!!\n","color:#666;font-family:Arial;letter-spacing:.02em;font-size:x-large;text-shadow:2px 2px 0 #A0E7FE,3px 3px 1px rgba(0,0,0,.3);");
-console.log("%cThis is Just Tools For Developer","color:red;font-size:18px;");	
+console.log("%cThis is Just Tools For Developer","color:red;font-size:18px;");
 	
+  var rs = $("aside.control-sidebar");
+
 	$("a[href='#']:not([download])").on("click",function(e){
 		e.preventDefault();
 	});
+
+/* FOR Remove Dropside & chaining with Dropdwon Bootstrap */
+  $(document).on("click",function(){
+    $(".fade.dropSide").remove();
+    rs.removeClass("control-sidebar-open");
+  });
+  $('.dropdown').on('shown.bs.dropdown',function(){
+    $(".fade.dropSide").remove();
+    rs.removeClass("control-sidebar-open");
+  });
 
 	$(".tip").tooltip();
 	$(".tip").click(function(){
@@ -16,7 +28,7 @@ console.log("%cThis is Just Tools For Developer","color:red;font-size:18px;");
     e.stopPropagation();
   });
 	
-  // FOR show search box
+/* FOR show search box */
   var boxHead = $("div.search-box").outerHeight()+4;
   $("div.search-box").css("top","-"+boxHead+"px");
 
@@ -27,9 +39,9 @@ console.log("%cThis is Just Tools For Developer","color:red;font-size:18px;");
     if(it){
       it.focus();
     }
-  });// END FOR show search box
+  });/* END FOR show search box */
 	
-  /* FOR backdrop POST FORM */
+/* FOR backdrop POST FORM */
   $('div.formWall').click(function(){
     var he = $(this);
     if(he.hasClass('fout')){
@@ -74,4 +86,4 @@ console.log("%cThis is Just Tools For Developer","color:red;font-size:18px;");
 	
 	
 	
-});// END script
+});/* END Q script */
