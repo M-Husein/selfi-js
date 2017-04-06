@@ -2,172 +2,587 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <base href="http://localhost/BUILD_APP/Q-App/">
+  <link rel="icon" href="att.ico" type="image/x-icon">
   <title>Selfi With JS</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="Q.css">
-  <script src="https://use.fontawesome.com/efb7ebeaf0.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/materialize.css">
+  <link rel="stylesheet" href="css/AdminLTE.css">
+  <link rel="stylesheet" href="css/fa.css">
+  <link rel="stylesheet" href="off/offline-theme-chrome.css">
+  <link rel="stylesheet" href="off/offline-language-english.css">
+  <link rel="stylesheet" href="css/skin.css">
+  <link rel="stylesheet" href="css/sweetalert.css">
+  <link rel="stylesheet" href="css/Q.css">
+  <script src="js/jquery-1.12.0.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/materialize.js"></script>
 </head>
-<body>
-  
-<h3>Take a Selfie With JavaScript</h3>
-<div class="text-center">
-  <div class="btn-group">
-    <button type="button" class="btn btn-info">Left</button>
-    <button type="button" class="btn btn-default">Middle</button>
-    <a href="connection.html" class="btn btn-danger" title="Try offline.js">CHECK CONNECTION</a>
-  </div>
-</div>
-<div class="container">
-  <div class="app">
-    <a href="#" id="start-camera" class="visible">Touch here to start the app.</a>
-    <video id="camera-stream"></video>
-    <img id="snap">
-    <p id="error-message"></p>
-    <div class="controls">
-      <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="fa fa-remove"></i></a>
-      <a href="#" id="take-photo" title="Take Photo"><i class="fa fa-camera"></i></a>
-      <a href="#" id="download-photo" download="selfie.png" title="Save Photo" class="disabled"><i class="fa fa-download"></i></a>  
+<body class="skin-blue sidebar-mini fixed" id="Dummy"><!-- full-h login-page-->
+<noscript>
+  <div class="modal fade in full-h" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body txt-c">
+          <div class="lead">
+          Sorry, Your browser does not support JavaScript! <br>OR<br> Please, Active Javascript in Your Browser Settings.
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- Hidden canvas element. Used for taking snapshot of video. -->
-    <canvas></canvas>
   </div>
+  <div class="modal-backdrop fade in"></div>
+</noscript>
+
+<div class="wrapper">
+  <header class="main-header" data-outheight="dcm">
+    <a href="" class="logo hide-S" title="Back to Home">
+      <img src="att.png" alt="Q-brand">
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+      <div class="col-lg-3 col-md-3" id="navsearch">
+        <div class="input-group input-group-sm">
+          <span class="input-group-btn hide-L hide-M">
+            <span class="btn btn-default xNavSearch"><i class="fa fa-remove"></i></span>
+          </span>
+          <input type="text" class="form-control" placeholder="Search" autocomplete="off">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+          </span>
+        </div>
+      </div>
+      <a href="#" class="sidebar-toggle hide-L hide-M" data-toggle="offcanvas" title="Toggle Sidebar">
+        <img src="att.png" alt="ico_logo">
+      </a>
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li class="dropdown messages-menu">
+            <a href="#" class="tip" data-placement="bottom" title="Ask Q">
+              <i class="fa fa-question-circle"></i>
+            </a>
+          </li>
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle tip" data-placement="bottom" data-toggle="dropdown" title="About Q">
+              <i class="fa fa-info-circle"></i>
+            </a>
+            <ul class="dropdown-menu dd">
+              <li class="user-header">
+                <a href="#" class="inblock">
+                  <img src="dummy/md/q-think.jpg" alt="Q-image">
+                </a>
+                <p>Muhamad Husein <small>Web Developer</small></p>
+              </li>
+              <li class="user-body pt5" style="border:0;">
+                <div class="btn-group flx-st">
+                  <a href="#" class="btn btn-default btn-flx">
+                    <i class="fa fa-dashboard"></i>
+                  </a>
+                  <a href="#" class="btn btn-default btn-flx">
+                    <i class="fa fa-phone"></i>
+                  </a>
+                  <a href="#" class="btn btn-default btn-flx" title="Email">
+                    <i class="fa fa-envelope"></i>
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li class="hide-L hide-M">
+            <a href="#navsearch"><i class="gi gi-search"></i></a>
+          </li>
+          <li>
+            <a href="#" class="tip" data-toggle="control-sidebar" data-placement="bottom" title="More">
+              <i class="fa fa-gears"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <div class="user-panel">
+        <div class="pl image">
+          <img src="dummy/md/q-think.jpg" alt="Image">
+        </div>
+        <div class="pl info">
+          <p>Muhamad Husein</p>
+          <a href="#"><i class="fa fa-circle txt-blue"></i> Online</a>
+        </div>
+      </div>
+      <ul class="sidebar-menu">
+        <li class="">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-table"></i> <span>Data Employee</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i> Data tables</a></li>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Simple tables</a>
+            </li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>Layout Options</span>
+            <span class="label label-primary pull-right">4</span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="jquery/set_layout"><i class="fa fa-circle-o"></i> Dummy Layout</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Boxed</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Fixed</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-pie-chart"></i>
+            <span>Charts</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i> ChartJS</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Morris</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-edit"></i> <span>Forms</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i> General Elements</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Editors</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa fa-calendar"></i> <span>Calendar</span>
+            <small class="label pull-right bg-red">3</small>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa fa-envelope"></i> <span>Mailbox</span>
+            <small class="label pull-right bg-yellow">12</small>
+          </a>
+        </li>
+        <li>
+          <a href="#"><i class="fa fa-folder"></i> <span>Examples</span></a>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-share"></i> <span>Multilevel</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Level One <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                <li>
+                  <a href="#"><i class="fa fa-circle-o"></i> Level Two <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+          </ul>
+        </li>
+        <li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+        <li class="header">LABELS</li>
+        <li><a href="#"><i class="fa fa-circle-o txt-red"></i> <span>Important</span></a></li>
+        <li><a href="#"><i class="fa fa-circle-o txt-yellow"></i> <span>Warning</span></a></li>
+        <li><a href="#"><i class="fa fa-circle-o txt-aqua"></i> <span>Information</span></a></li>
+      </ul>
+    </section><!-- END sidebar -->
+  </aside>
+
+  <div class="content-wrapper">
+    <section class="content"><!-- Main content -->
+      <div class="container">
+<div id="tripmeter">
+  <p>Starting Location (lat, lon):<br/>
+    <span id="startLat">???</span>°, <span id="startLon">???</span>°
+  </p>
+  <p>Current Location (lat, lon):<br/>
+    <span id="currentLat">???</span>°, <span id="currentLon">???</span>°
+  </p>
+  <p>Distance from starting location:<br/>
+    <span id="distance">0</span> km
+  </p>
 </div>
-  
+      </div>
+    </section>
+  </div>
+
+  <aside class="control-sidebar control-sidebar-dark">
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li class="active">
+        <a href="#moreOption" data-toggle="tab"><i class="fa fa-home"></i></a>
+      </li>
+      <li>
+        <a href="#absenToday" data-toggle="tab"><i class="fa fa-flag"></i></a>
+      </li>
+      <li>
+        <a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a>
+      </li>
+    </ul>
+    <div class="tab-content" id="kontenR">
+      <div class="tab-pane fade in active" id="moreOption">
+        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="absen/listabsen" class="flx-row-ic" title="History Absensi">
+              <i class="menu-icon fa fa-flag-o bg-red"></i>
+              <div class="flex1 ml15 elip">
+                <div class="elip">History Absensi</div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="#" class="flx-cw">
+              <h4 class="control-sidebar-subheading">
+                Custom Template Design
+                <span class="label label-danger pull-right">70%</span>
+              </h4>
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-danger" style="width:70%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-cw">
+              <h4 class="control-sidebar-subheading">
+                Update Resume
+                <span class="label label-success pull-right">95%</span>
+              </h4>
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-success" style="width:95%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-cw">
+              <h4 class="control-sidebar-subheading">
+                Laravel Integration
+                <span class="label label-warning pull-right">50%</span>
+              </h4>
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-warning" style="width:50%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-cw">
+              <h4 class="control-sidebar-subheading">
+                Back End Framework
+                <span class="label label-primary pull-right">68%</span>
+              </h4>
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-primary" style="width:68%"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-pane" id="absenToday">
+        <h3 class="control-sidebar-heading">Absen hari ini</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/q-think_160.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Muhamad Husein</div>
+                <time>20:10:05</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flx-row-ic" title="User Name">
+              <img src="dummy/md/pak-asep.jpg" class="menu-icon" alt="User">
+              <div class="flex1 pl15 elip">
+                <div class="elip">Asep Diyan Sopian 05TPLEE Universtas Pamulang</div>
+                <time>13:10:55</time>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+          <h3 class="control-sidebar-heading">General Settings</h3>
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Report panel usage
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+            <p>Some information about this general settings option</p>
+          </div>
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Allow mail redirect
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+            <p>Other sets of options are available</p>
+          </div>
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Expose author name in posts
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+            <p>Allow the user to show his name in blog posts</p>
+          </div>
+          <h3 class="control-sidebar-heading">Chat Settings</h3>
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Show me as online
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Turn off notifications
+              <input type="checkbox" class="pull-right">
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Delete chat history
+              <span class="text-red pr"><i class="fa fa-trash-o"></i></span>
+            </label>
+          </div>
+        </form>
+      </div><!-- /.tab-pane -->
+    </div>
+  </aside>
+  <div class="control-sidebar-bg"></div>
+</div>
+
+<script src="js/slimscroll.js"></script>
+<script src="js/sweetalert.js"></script>
+<script src="js/app.js"></script>
+<script src="js/Q.js"></script>
 <script>
-// References to all the element we will need.
-var video = document.querySelector('#camera-stream'),
-    image = document.querySelector('#snap'),
-    start_camera = document.querySelector('#start-camera'),
-    controls = document.querySelector('.controls'),
-    take_photo_btn = document.querySelector('#take-photo'),
-    delete_photo_btn = document.querySelector('#delete-photo'),
-    download_photo_btn = document.querySelector('#download-photo'),
-    error_message = document.querySelector('#error-message');
-
-// The getUserMedia interface is used for handling camera input.
-// Some browsers need a prefix so here we're covering all the options
-navigator.getMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
-
-if(!navigator.getMedia){
-  displayErrorMessage("Your browser doesn't have support for the navigator.getUserMedia interface.");
-}else{
-
-  // Request the camera.
-  navigator.getMedia(
-    {
-      video:true
-    },
-    // Success Callback
-    function(stream){
-
-      // Create an object URL for the video stream and
-      // set it as src of our HTLM video element.
-      video.src = window.URL.createObjectURL(stream);
-
-      // Play the video element to start the stream.
-      video.play();
-      video.onplay = function(){
-        showVideo();
-      };
-    },
-    // Error Callback
-    function(err){
-      displayErrorMessage("There was an error with accessing the camera stream: " + err.name,err);
-    }
-  );
-}
-
-// Mobile browsers cannot play video without user input,
-// so here we're using a button to start it manually.
-start_camera.addEventListener("click",function(e){
-  e.preventDefault();
-  // Start video playback manually.
-  video.play();
-  showVideo();
-});
-
-take_photo_btn.addEventListener("click",function(e){
-  e.preventDefault();
-  var snap = takeSnapshot();
-
-  // Show image. 
-  image.setAttribute('src', snap);
-  image.classList.add("visible");
-
-  // Enable delete and save buttons
-  delete_photo_btn.classList.remove("disabled");
-  download_photo_btn.classList.remove("disabled");
-
-  // Set the href attribute of the download button to the snap url.
-  download_photo_btn.href = snap;
-
-  // Pause video playback of stream.
-  video.pause();
-});
-
-delete_photo_btn.addEventListener("click",function(e){
-  e.preventDefault();
-  // Hide image.
-  image.setAttribute('src', "");
-  image.classList.remove("visible");
-
-  // Disable delete and save buttons
-  delete_photo_btn.classList.add("disabled");
-  download_photo_btn.classList.add("disabled");
-
-  // Resume playback of stream.
-  video.play();
-});
-
-function showVideo(){
-  // Display the video stream and the controls.
-  hideUI();
-  video.classList.add("visible");
-  controls.classList.add("visible");
-}
-
-function takeSnapshot(){
-  // Here we're using a trick that involves a hidden canvas element.  
-
-  var hidden_canvas = document.querySelector('canvas'),
-      context = hidden_canvas.getContext('2d');
-
-  var width = video.videoWidth,
-      height = video.videoHeight;
-  if(width && height){
-    // Setup a canvas with the same dimensions as the video.
-    hidden_canvas.width = width;
-    hidden_canvas.height = height;
-
-    // Make a copy of the current frame in the video on the canvas.
-    context.drawImage(video,0,0,width,height);
-
-    // Turn the canvas image into a dataURL that can be used as a src for our photo.
-    return hidden_canvas.toDataURL('image/png');
+document.addEventListener('DOMContentLoaded',function(){
+// check for Geolocation support
+  if(navigator.geolocation){
+    console.log('Geolocation is supported!');
+  }else{
+    console.log('Geolocation is not supported for this Browser/OS version yet');
   }
+
+// Determine the User's Current Location
+window.onload = function(){
+  var startPos;
+  navigator.geolocation.getCurrentPosition(function(position){
+    startPos = position;
+    document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+    document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+  });
+};
+
+// Handle Errors
+window.onload = function(){
+  var startPos;
+  navigator.geolocation.getCurrentPosition(function(position){
+    // same as above
+  },function(error){
+    alert('Error occurred. Error code: '+error.code);
+    // error.code can be:
+    // 0: unknown error
+    // 1: permission denied
+    // 2: position unavailable (error response from locaton provider)
+    // 3: timed out
+  });
+};
+
+// Monitor the User's Location
+navigator.geolocation.watchPosition(function(position){
+  document.getElementById('currentLat').innerHTML = position.coords.latitude;
+  document.getElementById('currentLon').innerHTML = position.coords.longitude;
+});
+
+// Show Distance Travelled
+// navigator.geolocation.watchPosition(function(position){
+// // same as above
+//   document.getElementById('distance').innerHTML = calculateDistance(startPos.coords.latitude,startPos.coords.longitude,position.coords.latitude,position.coords.longitude);
+// });
+
+function calculateDistance(lat1,lon1,lat2,lon2){
+  var R = 6371; // km
+  var dLat = (lat2 - lat1).toRad();
+  var dLon = (lon2 - lon1).toRad(); 
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * Math.sin(dLon / 2) * Math.sin(dLon / 2); 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); 
+  var d = R * c;
+  return d;
+}
+Number.prototype.toRad = function(){
+  return this * Math.PI / 180;
 }
 
-function displayErrorMessage(error_msg,error){
-  error = error || "";
-  if(error){
-    console.log(error);
-  }
-  error_message.innerText = error_msg;
-  hideUI();
-  error_message.classList.add("visible");
-}
 
-function hideUI(){
-  // Helper function for clearing the app UI.
-  controls.classList.remove("visible");
-  start_camera.classList.remove("visible");
-  video.classList.remove("visible");
-  snap.classList.remove("visible");
-  error_message.classList.remove("visible");
-}  
+
+
+
+});
+
 </script>
   
 </body></html>
