@@ -37,11 +37,14 @@ body.fixed{
 .flx-st{
   display:flex;
   flex-flow:row wrap;
-  justify-content:center;
   align-items:stretch;
+  justify-content:center;
 }
 .flx-cw{
 	flex-flow:column wrap;
+}
+.flx-st > .btn-flx{
+	flex:1;
 }
 .inblock{
   display:inline-block !important;
