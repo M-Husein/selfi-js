@@ -172,14 +172,14 @@ var $video = $('#camera-stream'),
 
 // Flash flash bulb
   function flash(){
-    $('<div />', {
-        'class': 'flash'
+    $('<div />',{
+        'class':'flash'
     })
     .appendTo('body')
     .fadeOut('fast',function(){
         $(this).remove();
     });
-    sound.play();
+    //sound.play();
   }  
   
 $('.do-video-detect').click(function(e){
@@ -192,7 +192,6 @@ $('.do-video-detect').click(function(e){
 
   setTimeout(function(){
     $video[0].pause();
-
     $video.faceDetection({
       interval:1,
       async:true,
@@ -206,8 +205,7 @@ $('.do-video-detect').click(function(e){
             'width':faces[0].width  * faces[0].scaleX + 'px',
             'height':faces[0].height * faces[0].scaleY + 'px'
           }
-        })
-        .insertAfter(this);
+        }).insertAfter(this);
       }
     });
   },500);
