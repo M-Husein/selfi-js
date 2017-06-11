@@ -53,8 +53,7 @@
     };
   };
 
-  /**
-   * Captures the user camera when tracking a video element and set its source
+  /* Captures the user camera when tracking a video element and set its source
    * to the camera stream.
    * @param {HTMLVideoElement} element Canvas element to track.
    * @param {object} opt_options Optional configuration to the tracker.
