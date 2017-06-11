@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>tracking face with camera</title>
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="assets/demo.css">
+<script src="js/jquery-1.12.4.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="../build/tracking.js"></script>
+<script src="../build/data/face-min.js"></script>
+ <script src="../node_modules/dat.gui/build/dat.gui.min.js"></script>
+<!-- <script src="assets/stats.min.js"></script> -->
+<style>
+video,canvas{
+/*  margin-left:230px;
+  margin-top:120px;*/
+  position:absolute;
+}
+#err{
+  color:red;
+  font-weight:700;
+  text-align:center;
+}
+</style>
+</head>
+<body>
+<div class="modal fade" id="modalAbsenInfo" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></span>
+        <h4 class="modal-title">WARNING</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <span class="btn btn-default" data-dismiss="modal">Close</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalCam" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></span>
+        <h4 class="modal-title">SUCCESS</h4>
+      </div>
+      <div class="modal-body pd0">
+        <div class="demo-container">
+          <!--  width="400" height="320" -->
+          <video id="video" preload autoplay loop muted></video>
+          <canvas id="canvas"></canvas>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span id="err" class="pull-left"></span>
+        <span class="btn btn-info" data-dismiss="modal">Close</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="demo-title hidden">
+  <p><a href="http://trackingjs.com" target="_parent">tracking.js</a> － get user's webcam and detect faces</p>
+</div>
+<div class="demo-frame"></div> -->
+<div class="container">
+  <span class="btn btn-info" data-toggle="modal" data-target="#modalCam">CAMERA START</span>
+</div>
+
+<script>
+// window.onload = function(){
+$(document).ready(function(){
+
+  function autoMediaWidthHeight(){
+    var vid = $("#video"),
+        canv = $("#canvas"),
+        contWidth = $("#modalCam .demo-container").outerWidth(true), // 
+        contHeight = $("#modalCam .demo-container").outerHeight(true);
+
+    vid.attr({width:+contWidth,height:+contHeight});
+    canv.attr({width:+contWidth,height:+contHeight});
+  }
+
+  $(window).on("resize",function(){
+    autoMediaWidthHeight();
+  });
+
+  var mc = $("#modalCam");
+  // mc.modal("show");
+  mc.on("shown.bs.modal",function(e){
+
+    // as tracking is a global variable, you can just call it anytime after initialize 
+    // window.setTimeout(function(){ 
+    //   tracking.stopUserMedia();
+    // },500 * 7);
+    
+    autoMediaWidthHeight();
+
+    var video = document.getElementById('video');
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+
+    var tracker = new tracking.ObjectTracker('face');
+    tracker.setInitialScale(4);
+    tracker.setStepSize(2);
+    tracker.setEdgesDensity(0.1);
+
+    var err = $('#err');// MY CUSTOM
+    var wURL = window.URL || window.webkitURL,
+        cam;
+
+    var canvs = $("#canvas");
+    var cw = canvs.outerWidth(true);
+    var ch = canvs.outerHeight(true);
+
+    tracking.track('#video',tracker,{camera:true});
+
+    tracker.on('track',function(event){
+      context.clearRect(0,0,cw,ch); // 0,0,canvas.width,canvas.height
+
+      if(event.data.length === 0){
+        //tracker.removeAllListeners('track',function(event){ //TRY
+          // console.log("NOT DETECT FACE...!!!");
+        //});
+        //console.log("NOT DETECT FACE...!!!"); //TRY
+        err.text("Please in front of the camera");
+        tracker.removeListener('track',function(event){
+
+        });
+      }else{
+        event.data.forEach(function(rect){
+          context.strokeStyle = '#a64ceb';
+          context.strokeRect(rect.x,rect.y,rect.width,rect.height);
+          context.font = '11px Helvetica';
+          context.fillStyle = "#fff";
+          context.fillText('x: ' + rect.x + 'px',rect.x + rect.width + 5,rect.y + 11);
+          context.fillText('y: ' + rect.y + 'px',rect.x + rect.width + 5,rect.y + 22);
+        });
+
+        err.text(""); // Remove Error Text
+        flash(); // Play Flash Camera Animation
+        video.pause(); // Stop Video
+        tracking.localStream.stop(); // Stop stream Webcam getUserMedia
+
+        //mc.modal("hide");
+        //$("#modalAbsenInfo").find(".modal-body").text("ATTENDANCE SUCCESS");
+        //$("#modalAbsenInfo").modal("show");
+
+        tracker.removeAllListeners('track',function(event){ //TRY
+          //console.log("NOT DETECT FACE...!!!");
+        });
+      }
+    });
+  // FOR GUI setting
+    // var gui = new dat.GUI();
+    // gui.add(tracker,'edgesDensity',0.1,0.5).step(0.01);
+    // gui.add(tracker,'initialScale',1.0,10.0).step(0.1);
+    // gui.add(tracker,'stepSize',1,5).step(0.1);
+  });
+
+  function flash(){ // FOR flash
+    $('<div />',{
+      'class':'flash'
+    })
+    .appendTo('body')
+    .fadeOut('slow',function(){
+      $(this).remove();
+    });
+    cekrek();
+  }
+
+  var camSound; // FOR Camera Sound
+  function cekrek(){
+    if(typeof camSound === 'undefined')
+      camSound = new Audio(origin+"audio/camera_shutter_2.wav");
+    camSound.play();
+  }
+
+});//END document ready function
+</script>
+
+</body></html>
