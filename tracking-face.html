@@ -3,44 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>tracking face with camera</title>
+<base href="https://m-husein.github.io/selfi-js/">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<title>Tracking Face With Camera</title>
 <link rel="stylesheet" href="css/bootstrap.css">
-<link rel="stylesheet" href="assets/demo.css">
-<script src="js/jquery-1.12.4.min.js"></script>
+<script src="js/jquery-1.12.0.min.js"></script>
 <script src="js/bootstrap.js"></script>
-<script src="../build/tracking.js"></script>
-<script src="../build/data/face-min.js"></script>
- <script src="../node_modules/dat.gui/build/dat.gui.min.js"></script>
+<script src="face/tracking.js"></script>
+<script src="face/face-min.js"></script>
+ <script src="node_modules/dat.gui/build/dat.gui.min.js"></script>
 <!-- <script src="assets/stats.min.js"></script> -->
 <style>
-video,canvas{
-/*  margin-left:230px;
-  margin-top:120px;*/
-  position:absolute;
-}
-#err{
-  color:red;
-  font-weight:700;
-  text-align:center;
-}
+video,canvas{position:absolute;}
 </style>
 </head>
 <body>
-<div class="modal fade" id="modalAbsenInfo" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <span class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></span>
-        <h4 class="modal-title">WARNING</h4>
-      </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer">
-        <span class="btn btn-default" data-dismiss="modal">Close</span>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="modal fade" id="modalCam" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -50,7 +27,6 @@ video,canvas{
       </div>
       <div class="modal-body pd0">
         <div class="demo-container">
-          <!--  width="400" height="320" -->
           <video id="video" preload autoplay loop muted></video>
           <canvas id="canvas"></canvas>
         </div>
@@ -63,18 +39,13 @@ video,canvas{
   </div>
 </div>
 
-<!-- <div class="demo-title hidden">
-  <p><a href="http://trackingjs.com" target="_parent">tracking.js</a> － get user's webcam and detect faces</p>
-</div>
-<div class="demo-frame"></div> -->
 <div class="container">
+  <h2><a href="http://trackingjs.com" target="_parent">tracking.js</a> － Get User's Webcam And Detect Faces</h2>
   <span class="btn btn-info" data-toggle="modal" data-target="#modalCam">CAMERA START</span>
 </div>
 
 <script>
-// window.onload = function(){
 $(document).ready(function(){
-
   function autoMediaWidthHeight(){
     var vid = $("#video"),
         canv = $("#canvas"),
@@ -90,13 +61,7 @@ $(document).ready(function(){
   });
 
   var mc = $("#modalCam");
-  // mc.modal("show");
   mc.on("shown.bs.modal",function(e){
-
-    // as tracking is a global variable, you can just call it anytime after initialize 
-    // window.setTimeout(function(){ 
-    //   tracking.stopUserMedia();
-    // },500 * 7);
     
     autoMediaWidthHeight();
 
