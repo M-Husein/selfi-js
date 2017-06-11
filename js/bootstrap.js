@@ -2380,6 +2380,6 @@ if (typeof jQuery === 'undefined') {
 var protocol = location.protocol,
     host = location.host,
     port = location.port,
-    origin = location.origin+'/skripsi_dev/',
+    origin = location.origin+'/selfi-js/',
     href = location.href,
     pathname = location.pathname;
