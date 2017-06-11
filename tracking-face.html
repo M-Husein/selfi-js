@@ -24,16 +24,16 @@ video,canvas{position:absolute;}
     <div class="modal-content">
       <div class="modal-header">
         <span class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></span>
-        <h4 class="modal-title">SUCCESS</h4>
+        <h4 class="modal-title"></h4>
       </div>
       <div class="modal-body pd0">
         <div class="demo-container">
+          <!--  width="400" height="320" -->
           <video id="video" preload autoplay loop muted></video>
           <canvas id="canvas"></canvas>
         </div>
       </div>
       <div class="modal-footer">
-        <span id="err" class="pull-left"></span>
         <span class="btn btn-info" data-dismiss="modal">Close</span>
       </div>
     </div>
@@ -42,11 +42,13 @@ video,canvas{position:absolute;}
 
 <div class="container">
   <h2><a href="http://trackingjs.com" target="_parent">tracking.js</a> － Get User's Webcam And Detect Faces</h2>
-  <span class="btn btn-info" data-toggle="modal" data-target="#modalCam">CAMERA START</span>
+  <span class="btn btn-info" data-toggle="modal" data-target="#modalCam" data-backdrop="static">CAMERA START</span>
 </div>
 
 <script>
 $(document).ready(function(){
+
+  var mc = $("#modalCam");
 
   function autoMediaWidthHeight(){
     var vid = $("#video"),
@@ -62,17 +64,26 @@ $(document).ready(function(){
     autoMediaWidthHeight();
   });
 
-  var mc = $("#modalCam");
-  // mc.modal("show");
   mc.on("shown.bs.modal",function(e){
-
     // as tracking is a global variable, you can just call it anytime after initialize 
     // window.setTimeout(function(){ 
     //   tracking.stopUserMedia();
     // },500 * 7);
     
     autoMediaWidthHeight();
+    detectFace();
+  });
 
+  mc.on("hidden.bs.modal",function(e){
+    var c = document.getElementById('canvas');
+    var ctxt = c.getContext('2d');
+
+    $("#video").removeAttr("src");
+    ctxt.clearRect(0,0,c.width,c.height);
+    mc.find(".modal-title").removeClass("txt-danger txt-primary").text("");
+  });
+
+  function detectFace(){
     var video = document.getElementById('video');
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
@@ -82,7 +93,7 @@ $(document).ready(function(){
     tracker.setStepSize(2);
     tracker.setEdgesDensity(0.1);
 
-    var err = $('#err');// MY CUSTOM
+    var info = $("#modalCam .modal-title");// MY CUSTOM
     var wURL = window.URL || window.webkitURL,
         cam;
 
@@ -100,7 +111,7 @@ $(document).ready(function(){
           // console.log("NOT DETECT FACE...!!!");
         //});
         //console.log("NOT DETECT FACE...!!!"); //TRY
-        err.text("Please in front of the camera");
+        info.addClass("txt-danger").text("Please in front of the camera");
         tracker.removeListener('track',function(event){
 
         });
@@ -114,14 +125,10 @@ $(document).ready(function(){
           context.fillText('y: ' + rect.y + 'px',rect.x + rect.width + 5,rect.y + 22);
         });
 
-        err.text(""); // Remove Error Text
+        info.removeClass("txt-danger").addClass("txt-primary").text("Absen Berhasil, Selamat Bekerja"); // Remove Error Text
         flash(); // Play Flash Camera Animation
         video.pause(); // Stop Video
         tracking.localStream.stop(); // Stop stream Webcam getUserMedia
-
-        //mc.modal("hide");
-        //$("#modalAbsenInfo").find(".modal-body").text("ATTENDANCE SUCCESS");
-        //$("#modalAbsenInfo").modal("show");
 
         tracker.removeAllListeners('track',function(event){ //TRY
           //console.log("NOT DETECT FACE...!!!");
@@ -133,7 +140,7 @@ $(document).ready(function(){
     // gui.add(tracker,'edgesDensity',0.1,0.5).step(0.01);
     // gui.add(tracker,'initialScale',1.0,10.0).step(0.1);
     // gui.add(tracker,'stepSize',1,5).step(0.1);
-  });
+  }
 
   function flash(){ // FOR flash
     $('<div />',{
