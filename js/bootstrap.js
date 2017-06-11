@@ -2375,3 +2375,11 @@ if (typeof jQuery === 'undefined') {
   })
 
 }(jQuery);
+
+// Location Object:
+var protocol = location.protocol,
+		host = location.host,
+    port = location.port,
+    origin = location.origin+'/skripsi_dev/',
+    href = location.href,
+    pathname = location.pathname;
